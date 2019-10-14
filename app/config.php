@@ -2,7 +2,7 @@
 
 return [
     "url"=>"http://polaznik28.edunova.hr/",
-    "nazivApp" => "VintageTape",
+    "nazivApp" => "VintageTape2",
     "dev"=> true,
     "db" => [
         "server"=>"localhost",
