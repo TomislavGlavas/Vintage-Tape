@@ -1,0 +1,40 @@
+<div class="title-bar" data-responsive-toggle="responsive-menu" data-hide-for="medium">
+  <button class="menu-icon" type="button" data-toggle="responsive-menu"></button>
+  <div class="title-bar-title">Izbornik</div>
+</div>
+
+<div class="top-bar" id="responsive-menu">
+  <div class="top-bar-left">
+    <ul class="dropdown menu" data-dropdown-menu>
+      <li>
+        <a href="<?php echo App::config("url") ?>">
+            <?php echo App::config("nazivApp"); ?>
+        </a>
+      </li>
+      <li>
+        <a href="<?php echo App::config("url") ?>index/obrade">Obrade</a>
+      </li>
+      <li>
+        <a href="<?php echo App::config("url") ?>index/clanovi">Članovi</a>
+      </li>
+      <li>
+        <a href="<?php echo App::config("url") ?>index/onama">O nama</a>
+      </li>
+      <li>
+        <a href="<?php echo App::config("url") ?>index/kontakt">Kontakt</a>
+      </li> 
+    </ul>
+  </div>
+  <div class="top-bar-right">
+    <ul class="menu">
+      <li>
+      <?php if(isset($_SESSION["autoriziran"])): ?>
+        <a href="<?php echo App::config("url") ?>index/logout">Odjava
+        <?php echo $_SESSION["autoriziran"]->imePrezime;?></a>
+      <?php else:?>
+        <a href="<?php echo App::config("url") ?>index/login">Prijava</a>
+      <?php endif;?>
+      </li>
+    </ul>
+  </div>
+</div>
