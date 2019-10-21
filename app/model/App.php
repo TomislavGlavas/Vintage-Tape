@@ -4,17 +4,12 @@ class App
 {
     public static function start()
     {
-        //echo "Hello world";
-
+    
         $pathInfo = Request::pathinfo();
 
-        //echo $pathInfo;
 
         $pathParts = explode("/",$pathInfo);
 
-       // echo "<pre>";
-       // var_dump($pathParts);
-       // echo "</pre>";
 
         if(!isset($pathParts[1]) || empty($pathParts[1])){
             $controller = "Index";
@@ -24,8 +19,6 @@ class App
 
         $controller .= "Controller";
 
-        //echo $controller . "-&gt;";
-
 
         if(!isset($pathParts[2])|| empty($pathParts[2])){
             $function = "index";
@@ -33,11 +26,21 @@ class App
             $function = strtolower($pathParts[2]);
         }
 
-        //echo $function;
+        if(!isset($pathParts[3])|| empty($pathParts[3])){
+            $id = 0;
+        }else{
+            $id = (int)$pathParts[3];
+        }
+
 
         if(class_exists($controller) && method_exists($controller,$function)){
             $instanca = new $controller();
-            $instanca->$function();
+            if($id>0){
+                $instanca->$function($id);
+            }else{
+                $instanca->$function();
+            }
+            
         }else{
             if(App::config("dev")){
                 echo $controller . "->" . $function . " funkcija ne postoji";
@@ -59,10 +62,30 @@ class App
         return $config[$key];
     }
 
-    public static function param($key)
+    public static function param($key,$value='')
     {
+        if($value!==''){
+            $postavljen=false;
+            if(isset($_REQUEST[$key])){
+                $_REQUEST[$key]=$value;
+                $postavljen=true;
+               }
+               if(isset($_GET[$key])){
+                $_GET[$key]=$value;
+                $postavljen=true;
+               }
+               if(isset($_POST[$key])){
+                 $_POST[$key]=$value;
+                 $postavljen=true;
+               }
+               if(!$postavljen){
+                $_REQUEST[$key]=$value;
+                $_POST[$key]=$value;
+               }
+               return;
+        }
        if(isset($_REQUEST[$key])){
-        return $_REQUEST[$key]; //short cuircuiting
+        return $_REQUEST[$key]; 
        }
        if(isset($_GET[$key])){
         return $_GET[$key];
@@ -73,4 +96,11 @@ class App
 
        return "";
     }
+
+    public static function setParams($parametri){
+        foreach ($parametri as $key => $value) {
+            App::param($key,$value);
+        }
+    }
+
 }

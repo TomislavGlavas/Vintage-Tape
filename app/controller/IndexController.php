@@ -9,6 +9,10 @@ class IndexController
         $this->view = new View();
     }
 
+    public function era()
+    {
+        $this->view->render("era");
+    }
 
     public function index()
     {
@@ -43,7 +47,6 @@ class IndexController
 
     public function autoriziraj()
     {
-
         if(App::param("email")=="" && App::param("password")==""){
             $this->view->render("login",["greska"=>"Obavezno unos email i lozinka"]);
             return;
@@ -64,6 +67,7 @@ class IndexController
         $korisnik = new stdClass();
         $korisnik->email=$red->email;
         $korisnik->imePrezime=$red->ime . " " . $red->prezime;
+        $korisnik->uloga=$red->uloga;
         $_SESSION["autoriziran"]=$korisnik;
         $this->view->render("privatno/nadzornaPloca");
 
@@ -75,7 +79,7 @@ class IndexController
         session_destroy();
         
 
-       $this->$view->render("login");
+       $this->view->render("login");
     }
 
     public function nadzornaPloca(){

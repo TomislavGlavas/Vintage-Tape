@@ -1,0 +1,76 @@
+
+
+<?php 
+/*
+foreach($smjerovi as $smjer){    
+    echo $smjer->naziv, ', ';
+}
+*/
+echo '<h1>Jednostavan tekst</h1>';
+echo implode(', ', 
+            array_map(
+                function($smjer)
+                {
+                    return $smjer->naziv . ': ' . $smjer->cijena;
+                }, $smjerovi
+                )
+            );
+?>
+<h1>Liste</h1>
+<ol id="smjerovi">
+    <?php foreach($smjerovi as $smjer):?>
+        <li><?php echo $smjer->naziv; ?> <span class="alert badge"><?php echo $smjer->trajanje ?></span></li>
+    <?php endforeach;?>
+</ol>
+
+<h1>Tablice</h1>
+
+<table id="tablicaSmjerovi">
+  <thead>
+    <tr>
+     <th>Naziv</th>
+     <th>Trajanje</th>
+     <th>Cijena</th>
+     <th>Upisnina</th>
+     <th>Certificiran</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php foreach($smjerovi as $smjer): ?>
+      <tr>
+        <td><?php echo $smjer->naziv?></td>
+        <td><?=$smjer->trajanje?></td>
+        <td><?php echo $smjer->cijena?></td>
+        <td><?php echo $smjer->upisnina?></td>
+        <td><?php echo $smjer->certificiran?></td>
+      </tr>
+    <?php endforeach;?>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="2">
+        <?php echo Utility::sumProperties($smjerovi,'trajanje')/count($smjerovi) ?>
+      </td>
+      <td>
+        <?php echo number_format(Utility::sumProperties($smjerovi,'cijena')/count($smjerovi),2) ?>
+      </td>
+      <td>
+        <?php echo Utility::sumProperties($smjerovi,'upisnina')/count($smjerovi) ?>
+      </td>
+      <td></td>
+    </tr>
+  </tfoot>
+</table>
+
+<h1>Rešetka (grid)</h1>
+<div class="grid-x">
+  <?php foreach($smjerovi as $smjer): ?>
+    <div class="large-4 medium-6 small-12 column">
+        <h1><?php echo $smjer->naziv?></h1>
+        <p><?php echo $smjer->trajanje?> sati</p>
+        <p>Cijena <?php echo $smjer->cijena?> kn</p>
+        <p>Upisnina <?php echo $smjer->upisnina?> kn</p>
+        <p><?php echo $smjer->certificiran ? 'CERTIFICIRAN' : ''?></p>
+    </div>
+  <?php endforeach;?>
+</div>

@@ -1,0 +1,51 @@
+<fieldset class="fieldset">
+    <legend>Popunite tražene podatke</legend>
+
+    <?php echo Utility::inputText(
+        isset($greska) ? $greska : null,'naziv','Naziv obrade');?>
+    
+    <?php echo Utility::inputText(
+        isset($greska) ? $greska : null,'izvodac','Naziv izvođača');?>
+
+    <?php echo Utility::inputText(
+        isset($greska) ? $greska : null,'url','URL obrade');?>
+
+    <label for="smjer">Smjer</label>
+    <select name="smjer" id="smjer">
+        <option value="0">Odaberite smjer</option>
+        <?php foreach($smjerovi as $smjer): ?>
+            <option 
+            
+            <?php echo App::param("smjer")==$smjer->sifra ? 'selected="selected"' : ''; ?>
+            
+            
+            value="<?php echo $smjer->sifra; ?>">
+                <?php echo $smjer->naziv; ?>
+            </option>
+    <?php endforeach; ?>
+    </select>
+    
+
+    <label for="predavac">Predavač</label>
+    <select name="predavac" id="predavac">
+        <option value="0">Odaberite predavača</option>
+        <?php foreach($predavaci as $predavac): ?>
+            <option 
+            
+            <?php echo App::param("predavac")==$predavac->sifra ? 'selected="selected"' : ''; ?>
+            
+             value="<?php echo $predavac->sifra; ?>">
+                <?php echo $predavac->imeprezime; ?>
+            </option>
+    <?php endforeach; ?>
+    </select>
+
+    <?php echo Utility::inputText(
+        isset($greska) ? $greska : null,'brojpolaznika','Broj polaznika');?>
+    
+    <label for="datumpocetka">Datum početka</label>
+    <input type="datetime-local" name="datumpocetka" id="datumpocetka" 
+    value="<?php echo App::param("datumpocetka") ?>"/>
+
+</fieldset>
+<hr />

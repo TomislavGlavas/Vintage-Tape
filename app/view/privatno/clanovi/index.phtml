@@ -1,0 +1,88 @@
+<a href="<?php echo App::config("url") ?>polaznik/pripremaNovi" 
+class=" button expanded">
+<i class="fas fa-plus-square"></i>
+Dodaj novog člana</a>
+
+<div class="grid-container">
+
+<form 
+    action="<?php echo App::config("url") ?>clan/index" 
+    method="get">
+    <input type="text" name="uvjet" id="uvjet" 
+    placeholder="unesite uvjet pretraživanja"
+    value="<?php echo App::param("uvjet") ?>" />
+    <input type="hidden" name="trazi" value="true" />
+
+</form>
+
+<div class="grid-x">
+    <?php foreach($clanovi as $clan): ?>
+        <div class="large-3 medium-6 small-12 column">
+            <ul class="pricing-table">
+                <li class="price"><?php echo $clan->ime . ' ' . $clan->prezime?></li>
+                <li>
+                <?php // echo App::config("url") public/img/nepoznataOsoba.png ?>
+                    <img id="p_<?php echo $clan->sifra; ?>" class="slika" src="<?php 
+                    $datoteka="";
+                    if(file_exists(App::config("putanja") . "public/img/clanovi/" . $clan->sifra . ".png")){
+                        $datoteka =  App::config("url") . "public/img/clanovi/" . $clan->sifra . ".png"; 
+                    }else{
+                        $datoteka =  App::config("url") . "public/img/nepoznataOsoba.png"; 
+                    }
+
+                    echo $datoteka 
+                    
+                    ?>" alt="<?php echo $clan->ime . ' ' . $clan->prezime ?>"><hr />
+                    <a title="Promjeni <?php echo $clan->ime . ' ' . $clan->prezime ?>" 
+                        href="<?php 
+                        echo App::config("url") 
+                        ?>clan/pripremaPromjeni/<?php echo $clan->sifra ?>">
+                        <i class="fas fa-edit fa-2x" style="color: orange"></i>
+                    </a>
+                    <?php if($clan->ukupno==0): ?>
+                        <a title="Obriši <?php echo $clan->ime . ' ' . $clan->prezime ?>" 
+                            onclick="return confirm('Sigurno obrisati <?php echo $clan->ime . ' ' . $clan->prezime ?>');"
+                            href="<?php 
+                            echo App::config("url") 
+                            ?>clan/brisanje/<?php echo $clan->sifra ?>">
+                            <i class="fas fa-trash fa-2x" style="color: red"></i>
+                        </a>
+                    <?php else:?>
+                        <i title="Ne može se obrisati jer je u orbadi" 
+                        class="fas fa-trash fa-2x" style="color: gray"></i>
+                    <?php endif;?>
+
+                </li>
+            </ul>
+        </div>
+    <?php endforeach;?>
+
+
+    <nav aria-label="Straničenje" style="width: 100%;">
+        <ul class="pagination text-center">
+            <li class="pagination-previous">
+            <a href="<?php echo App::config("url")?>clan/index/<?php echo $prethodnaStranica ?>?uvjet=<?php echo App::param("uvjet") ?>" aria-label="Prethodna stranica">Prethodno</a>
+            </li>
+            <li class="current"><?php echo $stranica . "/" . $ukupnoStranica ?></li>
+            <li class="pagination-next">
+                <a href="<?php echo App::config("url")?>clan/index/<?php echo $sljedecaStranica ?>?uvjet=<?php echo App::param("uvjet") ?>" aria-label="Sljedeća stranica">Sljedeće</a>
+            </li>
+        </ul>
+    </nav>
+
+</div>
+</div>
+
+
+
+
+
+<div class="reveal" id="slikaModal" data-reveal>
+  <img id="image" src="" alt="" />
+  <input type="file" id="inputImage" name="file" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff">
+  <a href="#" id="spremi">Spremi</a>
+
+  <button class="close-button" data-close aria-label="Close reveal" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>

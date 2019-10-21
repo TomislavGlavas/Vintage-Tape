@@ -1,0 +1,23 @@
+<div class="grid-x grid-margin-x">
+    <div class="cell large-6 large-offset-3">
+        <form method="post" 
+            action="<?php echo App::config("url")?>clan/promjeni/<?php echo $id ?>">
+                <?php include_once 'detalji.phtml' ?>
+                <div class="grid-x">
+                    <div class="large-3 small-5 cell">
+                        <a class="alert button expanded"
+                            href="<?php echo App::config("url")?>clan/index">
+                            Odustani
+                        </a>
+                    </div>
+                    <div class="large-1 small-1 column">
+                        
+                    </div>
+                    <div class="large-8 small-6 column">
+                        <input class="button expanded"
+                            type="submit" value="Promjena">
+                    </div>
+                </div>
+        </form>
+    </div>
+</div>

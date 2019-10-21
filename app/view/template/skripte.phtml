@@ -1,4 +1,12 @@
 <script src="<?php echo App::config("url") ?>public/js/vendor/jquery.js"></script>
     <script src="<?php echo App::config("url") ?>public/js/vendor/what-input.js"></script>
     <script src="<?php echo App::config("url") ?>public/js/vendor/foundation.js"></script>
+    <?php if(isset($jsLib)){
+        echo $jsLib."\n";
+    }
+    if(isset($javascript)){
+        echo $javascript."\n";
+    }
+    ?>
     <script src="<?php echo App::config("url") ?>public/js/app.js"></script>
+    

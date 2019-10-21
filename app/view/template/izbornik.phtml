@@ -6,23 +6,45 @@
 <div class="top-bar" id="responsive-menu">
   <div class="top-bar-left">
     <ul class="dropdown menu" data-dropdown-menu>
-      <li>
+      <li<?php echo Utility::active('/'); //ne radi ?>>
         <a href="<?php echo App::config("url") ?>">
             <?php echo App::config("nazivApp"); ?>
         </a>
       </li>
-      <li>
-        <a href="<?php echo App::config("url") ?>index/obrade">Obrade</a>
-      </li>
-      <li>
-        <a href="<?php echo App::config("url") ?>index/clanovi">Članovi</a>
-      </li>
-      <li>
+
+      <?php if(isset($_SESSION["autoriziran"])): ?>
+        <li<?php echo Utility::active('/index/nadzornaPloca'); ?>>
+          <a href="<?php echo App::config("url") ?>index/nadzornaPloca"><i class="fas fa-sliders-h"></i></a>
+        </li>
+        <li>
+        <?php if($_SESSION["autoriziran"]->uloga==="oper"): ?>
+          <a href="#">Programi</a>
+          <ul class="menu vertical">
+            <li<?php echo Utility::active('/obrada/index'); ?>>
+              <a href="<?php echo App::config("url") ?>obrada/index">Obrade</a>
+            </li>
+            <li<?php echo Utility::active('/polaznik/index'); ?>>
+              <a href="<?php echo App::config("url") ?>clan/index">Članovi</a>
+          </ul>
+        </li>
+        <?php endif;?>
+        
+        <?php if($_SESSION["autoriziran"]->uloga==="admin"): ?>
+        <li<?php echo Utility::active('/operater/index'); ?>>
+          <a href="<?php echo App::config("url") ?>operater/index">Operateri</a>
+        </li>
+      <?php endif;?>
+
+        <li<?php echo Utility::active('/index/era'); ?>>
+          <a href="<?php echo App::config("url") ?>index/era">ERA</a>
+        </li>
+      <?php endif;?>
+
+      <li<?php echo Utility::active('/index/onama'); ?>>
         <a href="<?php echo App::config("url") ?>index/onama">O nama</a>
       </li>
-      <li>
+      <li<?php echo Utility::active('/index/kontakt'); ?>>
         <a href="<?php echo App::config("url") ?>index/kontakt">Kontakt</a>
-      </li> 
     </ul>
   </div>
   <div class="top-bar-right">

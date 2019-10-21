@@ -1,0 +1,58 @@
+<div class="grid-x grid-margin-x">
+    <div class="cell large-6">
+        <form method="post" 
+            action="<?php echo App::config("url")?>grupa/promjeni/<?php echo $id ?>">
+                <?php include_once 'detalji.phtml' ?>
+                <div class="grid-x">
+                    <div class="large-3 small-5 column">
+                        <a class="alert button expanded"
+                            href="<?php echo App::config("url")?>grupa/index">
+                            Odustani
+                        </a>
+                    </div>
+                    <div class="large-1 small-1 column">
+                        
+                    </div>
+                    <div class="large-8 small-6 column">
+                        <input class="button expanded"
+                            type="submit" value="Promjena">
+                    </div>
+                </div>
+        </form>
+    </div>
+    <div class="cell large-6" id="polaznici">
+    <fieldset class="fieldset">
+        <legend>Upravljanje polaznicima</legend>
+            <input type="text" id="uvjet" />
+            <table>
+                <thead>
+                    <tr>
+                        <th>Polaznik</th>
+                        <th>Akcija</th>
+                    </tr>
+                </thead>
+                <tbody id="tijelo">
+                    <?php foreach($polaznici as $polaznik):?>
+                        <tr>
+                            <td><?php echo $polaznik->ime . " " 
+                            . $polaznik->prezime ?>
+                            
+                            <?php echo $polaznik->oib ?>
+                            
+                            <span style="font-size: 0.7em;">
+                            <?php echo $polaznik->email ?></span>
+                            </td>
+
+                            <td>
+                            <a href="#" class="polaznik" 
+                            id="p_<?php echo $polaznik->sifra ?>">
+                                <i class="fas fa-trash fa-2x" style="color: red"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach;?>
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+</div>

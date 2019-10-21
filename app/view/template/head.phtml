@@ -3,4 +3,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?php echo App::config("nazivApp"); ?></title>
 <link rel="stylesheet" href="<?php echo App::config("url") ?>public/css/foundation.css">
+<?php if(isset($cssFile)){
+        echo $cssFile . "\n";
+    }?>
 <link rel="stylesheet" href="<?php echo App::config("url") ?>public/css/app.css">
+<script src="https://kit.fontawesome.com/3b8c308efb.js"></script>
