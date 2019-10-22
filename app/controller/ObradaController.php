@@ -10,7 +10,7 @@ class ObradaController extends UlogaOperater
     public function index()
     {  
         $this->view->render("privatno/obrade/index",
-            ["grupe"=>Obrada::getObrade()]);
+            ["obrade"=>Obrada::getObrade()]);
     }
 
 

@@ -14,11 +14,13 @@ class Clan
         $veza = DB::getInstance();
         $izraz = $veza->prepare("
 
-        select sifra,ime,prezime from osoba
-
-        where concat(ime,prezime) like :uvjet
-
-        order by ime,prezime
+        select a.sifra,a.ime,a.prezime,count(b.obrada) as ukupno   
+        from glazbenik a   
+        inner join glazbenikobradainstrument b
+        on a.sifra=b.glazbenik
+        where concat(a.ime,a.prezime) like :uvjet
+        group by a.sifra,a.ime,a.prezime         
+        order by a.ime,a.prezime
         
 
         " . $limit
@@ -27,6 +29,21 @@ class Clan
         $izraz->execute(["uvjet"=>"%" . App::param("uvjet") . "%"]);
         return $izraz->fetchAll();
     }
+
+    public static function getInstrumenti($id)
+    {
+        $veza = DB::getInstance();
+        $izraz = $veza->prepare("
+        
+        select * from grupa where sifra=:grupa
+        
+        ");
+        $izraz->execute(['grupa'=>$id]);
+        return $izraz->fetch(PDO::FETCH_ASSOC);
+
+    }
+
+
 
 
     public static function getTraziCLanovi($uvjet, $grupa)
@@ -51,7 +68,7 @@ class Clan
         return $izraz->fetchAll();
     }
 
-    public static function getPolazniciNaObradi($obrada)
+    public static function getGlazbeniciNaObradi($obrada)
     {
        
         $veza = DB::getInstance();

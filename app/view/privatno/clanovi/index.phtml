@@ -20,6 +20,7 @@ Dodaj novog člana</a>
         <div class="large-3 medium-6 small-12 column">
             <ul class="pricing-table">
                 <li class="price"><?php echo $clan->ime . ' ' . $clan->prezime?></li>
+                <li>instrumenti</li>
                 <li>
                 <?php // echo App::config("url") public/img/nepoznataOsoba.png ?>
                     <img id="p_<?php echo $clan->sifra; ?>" class="slika" src="<?php 
@@ -53,6 +54,7 @@ Dodaj novog člana</a>
                     <?php endif;?>
 
                 </li>
+                
             </ul>
         </div>
     <?php endforeach;?>

@@ -31,7 +31,7 @@ class ClanController extends UlogaOperater
         }
 
         $this->view->render("privatno/clanovi/index",
-            ["polaznici"=>Clan::getCLanovi($stranica),
+            ["clanovi"=>Clan::getCLanovi($stranica),
             "prethodnaStranica"=>$prethodnaStranica,
             "stranica"=>$stranica,
             "sljedecaStranica"=>$sljedecaStranica,

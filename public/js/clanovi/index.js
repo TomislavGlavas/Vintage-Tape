@@ -1,8 +1,8 @@
 
-var sifraPolaznik;
+var sifraClan;
 
 $(".slika").click(function(){
-  sifraPolaznik=$(this).attr("id").split("_")[1];
+  sifraClan=$(this).attr("id").split("_")[1];
     $("#image").attr("src",$(this).attr("src"));
     $("#slikaModal").foundation("open");
     definirajCropper();
@@ -19,7 +19,7 @@ $("#spremi").click(function(){
         data: "slika=" + result.toDataURL(),
         success: function(vratioServer){
           if(vratioServer==="OK"){
-            $("#p_"+sifraPolaznik).attr("src",result.toDataURL());
+            $("#p_"+sifraClan).attr("src",result.toDataURL());
             $("#slikaModal").foundation("close");
           }else{
             alert(vratioServer);

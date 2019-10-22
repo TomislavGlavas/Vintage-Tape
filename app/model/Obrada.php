@@ -12,10 +12,13 @@ class Obrada
         a.izvodac,
         a.url,
         a.datum, 
-        b.naziv as zanr  
+        b.naziv as zanr,
+        count(c.glazbenik) as ukupno  
         from 
         obrada a inner join zanr b 
         on a.zanr=b.sifra
+        inner join glazbenikobradainstrument c
+        on a.sifra=c.obrada
         group by a.datum desc
         
         ");
