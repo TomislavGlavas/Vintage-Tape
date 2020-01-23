@@ -8,6 +8,7 @@ class Obrada
         $izraz = $veza->prepare("
         
         select 
+        a.sifra,
         a.naziv as obrada, 
         a.izvodac,
         a.url,
@@ -17,9 +18,10 @@ class Obrada
         from 
         obrada a inner join zanr b 
         on a.zanr=b.sifra
-        inner join glazbenikobradainstrument c
+        left join glazbenikobradainstrument c
         on a.sifra=c.obrada
-        group by a.datum desc
+        group by a.naziv
+        order by a.datum desc
         
         ");
         $izraz->execute();
@@ -48,6 +50,55 @@ class Obrada
         return $izraz->fetch(PDO::FETCH_ASSOC);
 
     }
+
+    public static function getZanrovi()
+    {
+        $veza = DB::getInstance();
+        $izraz = $veza->prepare("
+        
+        select * from zanr
+        
+        ");
+        $izraz->execute();
+        return $izraz->fetchAll();
+    }
+
+    public static function getGlazbenici()
+    {
+        $veza = DB::getInstance();
+        $izraz = $veza->prepare("
+        
+        select * from glazbenik
+        
+        ");
+        $izraz->execute();
+        return $izraz->fetchAll();
+    }
+
+    public static function getInstrumenti()
+    {
+        $veza = DB::getInstance();
+        $izraz = $veza->prepare("
+        
+        select * from instrument
+        
+        ");
+        $izraz->execute();
+        return $izraz->fetchAll();
+    }
+
+    public static function getGOI()
+    {
+        $veza = DB::getInstance();
+        $izraz = $veza->prepare("
+        
+        select * from zanr
+        
+        ");
+        $izraz->execute();
+        return $izraz->fetchAll();
+    }
+
 
     public static function novi()
     {
@@ -78,6 +129,17 @@ class Obrada
         ");
         $_POST['sifra']=$id;
         $izraz->execute($_POST);
+    }
+
+    public static function brisi($id)
+    {
+        $veza = DB::getInstance();
+        $izraz = $veza->prepare("
+        
+        delete from obrada where sifra=:sifra
+        
+        ");
+        $izraz->execute(['sifra'=>$id]);
     }
 
     public static function dodajGOI()
@@ -112,7 +174,7 @@ class Obrada
         select count(glazbenik) from glazbenikobradainstrument where obrada=:obrada
         
         ");
-        $izraz->execute(['grupa'=>$id]);
+        $izraz->execute(['obrada'=>$id]);
         $ukupno = $izraz->fetchColumn();
         return $ukupno==0;
 

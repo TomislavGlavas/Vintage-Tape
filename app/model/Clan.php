@@ -14,13 +14,15 @@ class Clan
         $veza = DB::getInstance();
         $izraz = $veza->prepare("
 
-        select a.sifra,a.ime,a.prezime,count(b.obrada) as ukupno   
-        from glazbenik a   
-        inner join glazbenikobradainstrument b
+        select  a.sifra,a.ime,a.prezime,count(b.obrada) as ukupno,group_concat(distinct c.ime order by c.sifra separator ', ' ) as instrument
+        from glazbenik a
+        left join glazbenikobradainstrument b
         on a.sifra=b.glazbenik
+        left join instrument c
+        on c.sifra=b.instrument
         where concat(a.ime,a.prezime) like :uvjet
-        group by a.sifra,a.ime,a.prezime         
-        order by a.ime,a.prezime
+        group by a.ime, a.prezime, a.sifra
+        order by a.ime, a.prezime
         
 
         " . $limit
@@ -30,41 +32,46 @@ class Clan
         return $izraz->fetchAll();
     }
 
-    public static function getInstrumenti($id)
+    public static function getInstrumentiNaCLanu($clan)
     {
         $veza = DB::getInstance();
         $izraz = $veza->prepare("
         
-        select * from grupa where sifra=:grupa
+        select distinct a.ime
+        from instrument a
+        inner join glazbenikobradainstrument b
+        on a.sifra=b.instrument 
+        where b.glazbenik=:clan
+        order by a.kategorija
         
         ");
-        $izraz->execute(['grupa'=>$id]);
-        return $izraz->fetch(PDO::FETCH_ASSOC);
+        $izraz->execute(['clan'=>$id]);
+        return $izraz->fetchAll();
 
     }
 
+    public static function traziclan()
+    {
+        header('Content-Type: application/json');
+        echo json_encode(Clan::getTraziClanovi(App::param("uvjet")));
+    }
 
 
-
-    public static function getTraziCLanovi($uvjet, $grupa)
+    public static function getTraziClanovi($uvjet)
     {
 
         
         $veza = DB::getInstance();
         $izraz = $veza->prepare("
         
-        select distinct a.sifra,a.ime,a.prezime
-        from glazbenik a inner join glazbenikobradainstrument b
-        on a.sifra=b.glazbenik 
-
-        where concat(a.ime,a.prezime) like :uvjet
-        and b.glazbenik not in (select glazbenik from glazbenikobradainstrument where obrada=:obrada)
+        select distinct * from glazbenik
+        where concat(ime,prezime) like :uvjet
     
         limit 10
         " 
     
         );
-        $izraz->execute(["uvjet"=>"%" . $uvjet . "%","obrada"=>$obrada]);
+        $izraz->execute(["uvjet"=>"%" . $uvjet . "%"]);
         return $izraz->fetchAll();
     }
 
@@ -111,10 +118,10 @@ class Clan
         (null,:ime,:prezime)
         
         ");
-        $izraz->execute([
-            'ime'=>$_POST['ime'],
-            'prezime'=>$_POST['prezime'],
-        ]);
+        $izraz->execute(
+        ['ime'=>$_POST['ime'],
+        'prezime'=>$_POST['prezime']]    
+        );
         $veza->commit();
     }
 
@@ -125,7 +132,7 @@ class Clan
         
         update glazbenik
         set ime=:ime,
-            prezime=:prezime,
+            prezime=:prezime
         where
             sifra = :sifra
         
@@ -139,7 +146,7 @@ class Clan
         $veza = DB::getInstance();
         $izraz = $veza->prepare("
         
-        delete glazbenik
+        delete from glazbenik
         where sifra=:sifra
         
         ");
@@ -165,8 +172,8 @@ class Clan
         $veza = DB::getInstance();
         $izraz = $veza->prepare("
         
-        select count(sifra) from glazbenik
-        where concat(ime,prezime) like :uvjet
+        select count(a.sifra) from glazbenik a 
+        where concat(a.ime,a.prezime) like :uvjet
         
         ");
         $izraz->execute(["uvjet"=>"%" . App::param("uvjet") . "%"]);

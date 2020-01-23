@@ -31,19 +31,14 @@ class ClanController extends UlogaOperater
         }
 
         $this->view->render("privatno/clanovi/index",
-            ["clanovi"=>Clan::getCLanovi($stranica),
+            [
+            "clanovi"=>Clan::getCLanovi($stranica),
             "prethodnaStranica"=>$prethodnaStranica,
             "stranica"=>$stranica,
             "sljedecaStranica"=>$sljedecaStranica,
-            "ukupnoStranica"=>$ukupnoStranica,
-            "cssFile"=>'<link rel="stylesheet" href="' . App::config("url") . 'public/css/cropper.css">',
-            "jsLib"=>'<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
-            <script src="https://fengyuanchen.github.io/js/common.js"></script>
-            <script src="' . App::config("url") . 'public/js/cropper.js"></script>
-            <script>var putanja="' . App::config("url") .  '";</script>
-           <script src="' . App::config("url") . 'public/js/clanovi/index.js"></script>']);
+            "ukupnoStranica"=>$ukupnoStranica]);
     }
-
+            
 
     function spremiSliku($id){
 
@@ -121,7 +116,24 @@ class ClanController extends UlogaOperater
 
     private function kontrole()
     {
-        //nema (još) kontrola
+        if (trim(App::param('ime')) === '') {
+        
+            $this->greska('ime', 'Obavezan unos');
+            
+            return false;
+            
+            }
+
+            if (strlen(App::param('ime')) > 30) {
+        
+                $this->greska('ime', 'Ime ne smije imati više od 30 znakova (trenutno ima: '.
+                
+                strlen(App::param('ime')).')');
+                
+                return false;
+                
+                }
+        
     return true;
     }
 
@@ -137,10 +149,10 @@ class ClanController extends UlogaOperater
             ]);
     }
 
-    public function trazipolaznik()
+    public function traziclan()
     {
         header('Content-Type: application/json');
-        echo json_encode(Clan::getTraziClanovi(App::param("uvjet"),App::param("obrada")));
+        echo json_encode(Clan::getTraziClanovi(App::param("uvjet")));
 
     }
 

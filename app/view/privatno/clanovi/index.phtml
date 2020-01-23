@@ -1,4 +1,4 @@
-<a href="<?php echo App::config("url") ?>polaznik/pripremaNovi" 
+<a href="<?php echo App::config("url") ?>clan/pripremaNovi" 
 class=" button expanded">
 <i class="fas fa-plus-square"></i>
 Dodaj novog člana</a>
@@ -20,9 +20,8 @@ Dodaj novog člana</a>
         <div class="large-3 medium-6 small-12 column">
             <ul class="pricing-table">
                 <li class="price"><?php echo $clan->ime . ' ' . $clan->prezime?></li>
-                <li>instrumenti</li>
+                
                 <li>
-                <?php // echo App::config("url") public/img/nepoznataOsoba.png ?>
                     <img id="p_<?php echo $clan->sifra; ?>" class="slika" src="<?php 
                     $datoteka="";
                     if(file_exists(App::config("putanja") . "public/img/clanovi/" . $clan->sifra . ".png")){
@@ -33,7 +32,13 @@ Dodaj novog člana</a>
 
                     echo $datoteka 
                     
-                    ?>" alt="<?php echo $clan->ime . ' ' . $clan->prezime ?>"><hr />
+                    
+                    ?> 
+                    
+                    "alt="<?php echo $clan->ime . ' ' . $clan->prezime ?>">
+                    <li><?php echo $clan->instrument ?></li>
+                    <br/>
+                    
                     <a title="Promjeni <?php echo $clan->ime . ' ' . $clan->prezime ?>" 
                         href="<?php 
                         echo App::config("url") 
@@ -42,7 +47,7 @@ Dodaj novog člana</a>
                     </a>
                     <?php if($clan->ukupno==0): ?>
                         <a title="Obriši <?php echo $clan->ime . ' ' . $clan->prezime ?>" 
-                            onclick="return confirm('Sigurno obrisati <?php echo $clan->ime . ' ' . $clan->prezime ?>');"
+                            onclick="return confirm('Sigurno obrisati <?php echo $clan->ime . ' ' . $clan->prezime ?>?');"
                             href="<?php 
                             echo App::config("url") 
                             ?>clan/brisanje/<?php echo $clan->sifra ?>">
@@ -72,8 +77,7 @@ Dodaj novog člana</a>
         </ul>
     </nav>
 
-</div>
-</div>
+
 
 
 

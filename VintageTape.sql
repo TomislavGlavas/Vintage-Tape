@@ -1,6 +1,6 @@
 drop database if exists VintageTape;
 create database VintageTape character set utf8 collate utf8_general_ci;
-# c:\xampp\mysql\bin\mysql -uedunova -pedunova --default_character_set=utf8 < C:\xampp\htdocs\polaznik28.edunova.hr\VintageTape.sql
+# c:\xampp\mysql\bin\mysql -uedunova -pedunova --default_character_set=utf8 < C:\xampp\htdocs\cpanel\VintageTape.sql
 use VintageTape;
 
 # za hosting

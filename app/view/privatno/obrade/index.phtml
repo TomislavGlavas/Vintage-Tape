@@ -16,7 +16,7 @@ Dodaj novu obradu</a>
   <tbody>
     <?php foreach($obrade as $obrada): ?>
       <tr>
-        <td><?php echo $obrada->obrada?></td>
+        <td><a href="<?php echo $obrada->url ?>"target="_blank"><?php echo $obrada->obrada ?>  </a></td>
         <td><?=$obrada->izvodac?></td>
         <td><?php echo date("d. m. Y.",strtotime($obrada->datum));?></td>
         <td><?php echo $obrada->zanr?></td>

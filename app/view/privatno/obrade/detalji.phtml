@@ -10,42 +10,23 @@
     <?php echo Utility::inputText(
         isset($greska) ? $greska : null,'url','URL obrade');?>
 
-    <label for="smjer">Smjer</label>
-    <select name="smjer" id="smjer">
-        <option value="0">Odaberite smjer</option>
-        <?php foreach($smjerovi as $smjer): ?>
-            <option 
-            
-            <?php echo App::param("smjer")==$smjer->sifra ? 'selected="selected"' : ''; ?>
-            
-            
-            value="<?php echo $smjer->sifra; ?>">
-                <?php echo $smjer->naziv; ?>
-            </option>
-    <?php endforeach; ?>
-    </select>
-    
-
-    <label for="predavac">Predavač</label>
-    <select name="predavac" id="predavac">
-        <option value="0">Odaberite predavača</option>
-        <?php foreach($predavaci as $predavac): ?>
-            <option 
-            
-            <?php echo App::param("predavac")==$predavac->sifra ? 'selected="selected"' : ''; ?>
-            
-             value="<?php echo $predavac->sifra; ?>">
-                <?php echo $predavac->imeprezime; ?>
-            </option>
-    <?php endforeach; ?>
-    </select>
-
-    <?php echo Utility::inputText(
-        isset($greska) ? $greska : null,'brojpolaznika','Broj polaznika');?>
+<label for="zanr">Žanr</label>
+        <select name="zanr" id="zanr">
+            <option value="0">Odaberite žanr</option>
+            <?php foreach($zanrovi as $zanr): ?>
+                <option 
+                
+                <?php echo App::param("zanr")==$zanr->sifra ? 'selected="selected"' : ''; ?>
+                
+                value="<?php echo $zanr->sifra; ?>">
+                    <?php echo $zanr->naziv; ?>
+                </option>
+        <?php endforeach; ?>
+        </select>
     
     <label for="datumpocetka">Datum početka</label>
-    <input type="date" name="datumpocetka" id="datumpocetka" 
-    value="<?php echo App::param("datumpocetka") ?>"/>
+    <input type="date" name="datum" id="datum" 
+    value="<?php echo App::param("datum") ?>"/>
 
 </fieldset>
 <hr />
